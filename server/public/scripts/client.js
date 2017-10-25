@@ -1,11 +1,17 @@
 console.log('js');
 $(document).ready(readyNow);
 
+var $userID;
+
 function readyNow(){
     console.log('jq');
-    getOwners();
+    
     $('#ownerRegisterButton').on('click', ownerRegClick );
+    $('#petRegisterButton').on('click', petRegClick );
+    $('#usernameHere').on('change', onOwnerChange);
+    getOwners();
 }
+
 
 function ownerRegClick(){
     console.log('in saveOwner' );
@@ -37,12 +43,60 @@ function getOwners() {
     })
 }
 
-
 function appendOwners(usernameIn){
- for (var i = 0; i < usernameIn.length; i++) {
+    $('#usernameHere').empty();
+    $('#usernameHere').append('<option>Select Owner Name</option>')
+    for (var i = 0; i < usernameIn.length; i++) {
      var username = usernameIn[i];
-     var firstName = username.firstName;
-     var lastName = username.lastName;
-     $('#usernameHere').append('<option>' + firstName + ' ' + lastName + '</option>');
+     console.log('user back', username);
+     var first = username.first;
+    console.log(first);
+     var last = username.last;
+     $('#usernameHere').append('<option data-id ="' + username.id + '">' + first + ' ' + last + '</option>');
  }
+}
+
+function petRegClick() {
+    console.log('pet button clicked');
+    var petToSend = {
+        owner_id: $userID,
+        name: $('#petName').val(),
+        color: $('#petColor').val(),
+        breed: $('#petBreed').val()
+    }
+    console.log(petToSend);
+    $.ajax({
+        type: 'POST',
+        url: '/pets',
+        data: petToSend
+    }).done(function(response){
+        console.log('added', response);
+        getPets();
+    }).fail(function(error){
+        console.log('Failed: ', error);
+    })
+}
+
+function getPets() {
+    $.ajax({
+        type: 'GET',
+        url: '/pets',
+    }).done(function(response){
+        console.log('added', response);
+        appendTable(response);
+    }).fail(function(error){
+        console.log('Failed: ', error);
+    })
+}
+
+function appendTable(petsAndOwners) {
+
+
+
+}
+
+function onOwnerChange(event){
+    $userID = $(this).find(':selected').data('id');
+    console.log('status change')
+    console.log($userID);
 }

@@ -22,7 +22,7 @@ router.post('/', function(req, res){
       console.log('POST connection error', errorConnectingToDB);
       res.sendStatus(500);
     } else {
-      var queryText = 'INSERT INTO "owners" ("first", "last") VALUES $1 $2;';
+      var queryText = 'INSERT INTO "owners" ("first", "last") VALUES ($1, $2);';
       db.query(queryText, [owner.firstName, owner.lastName], function(errorMakingQuery, result){
         done();
         if(errorMakingQuery){
