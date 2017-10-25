@@ -142,6 +142,7 @@ function getPets(){
 }
 
 function appendTable(petsAndOwners) {
+    $('#petData').empty();
     for (var i = 0; i < petsAndOwners.length; i++) {
         var petData = petsAndOwners[i];
         console.log('pet data', petData);
