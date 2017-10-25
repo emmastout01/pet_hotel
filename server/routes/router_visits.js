@@ -10,6 +10,28 @@ var config = {
   idleTimeoutMillis: 30000
 };
 
+//post
+router.post('/:id', function (req, res) {
+  var petId = req.params.id;
+  pool.connect(function (errorConnecting, db, done) {
+    if (errorConnecting) {
+      console.log('Error connecting', errorConnecting);
+      res.send(500);
+    } else {
+      var queryText = 'INSERT INTO "visits" ("pet_id") VALUES ($1);';
+      db.query(queryText, [petId], function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log(errorMakingQuery);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(201);
+        }
+      });
+    }
+  });//end pool
+});//end post route
+
 //put
 router.put('/', function (req, res) {
   var newVisit = req.body;
