@@ -51,7 +51,7 @@ router.delete('/:id', function (req, res) {
           console.log('errorMakingQuery', errorMakingQuery);
           res.sendStatus(500);
         } else {
-          res.send(201);
+          res.sendStatus(201);
         }
       });
     }
@@ -66,19 +66,41 @@ router.post('/', function (req, res) {
       console.log('Error connecting ', errorConnecting);
       res.sendStatus(500);
     } else {
-      var queryText = 'INSERT INTO "pets" ("name", "breed", "color", "owner_id") VALUES($1, $2, $3, $4)';
+      var queryText = 'INSERT INTO "pets" ("name", "breed", "color", "owner_id") VALUES($1, $2, $3, $4);';
       db.query(queryText, [newPet.name, newPet.breed, newPet.color, newPet.owner_id], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
           console.log('errorMakingQuery', errorMakingQuery);
           res.sendStatus(500);
         } else {
-          res.send(201);
+          res.sendStatus(201);
         }
       });
     }
   });//end of pool
 });//end of post
+
+//post to add a pet
+router.post('/:id', function (req, res) {
+    var pet = req.params.id;
+    pool.connect(function (errorConnecting, db, done) {
+      if (errorConnecting) {
+        console.log('Error connecting ', errorConnecting);
+        res.sendStatus(500);
+      } else {
+        var queryText = 'INSERT INTO "visits" ("pet_id") VALUES $1';
+        db.query(queryText, [pet], function (errorMakingQuery, result) {
+          done();
+          if (errorMakingQuery) {
+            console.log('errorMakingQuery', errorMakingQuery);
+            res.sendStatus(500);
+          } else {
+            res.sendStatus(201);
+          }
+        });
+      }
+    });//end of pool
+  });//end of post
 
 //put updates pets
 router.put('/:id', function (req, res) {
@@ -96,7 +118,7 @@ router.put('/:id', function (req, res) {
           console.log('errorMakingQuery', errorMakingQuery);
           res.sendStatus(500);
         } else {
-          res.send(201);
+          res.sendStatus(201);
         }
       });
     }

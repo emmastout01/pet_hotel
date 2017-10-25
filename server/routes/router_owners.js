@@ -16,7 +16,6 @@ var pool = poolModule;
 //POST Route to add a new owner
 router.post('/', function(req, res){
   var owner = req.body;
-
   pool.connect(function(errorConnectingToDB, db, done){
     if(errorConnectingToDB){
       console.log('POST connection error', errorConnectingToDB);
