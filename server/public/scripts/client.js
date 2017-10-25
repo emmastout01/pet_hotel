@@ -48,9 +48,7 @@ function appendOwners(usernameIn){
     $('#usernameHere').append('<option>Select Owner Name</option>')
     for (var i = 0; i < usernameIn.length; i++) {
      var username = usernameIn[i];
-     console.log('user back', username);
      var first = username.first;
-    console.log(first);
      var last = username.last;
      $('#usernameHere').append('<option data-id ="' + username.id + '">' + first + ' ' + last + '</option>');
  }
@@ -64,6 +62,7 @@ function petRegClick() {
         color: $('#petColor').val(),
         breed: $('#petBreed').val()
     }
+    console.log( 'user id', $userID);
     console.log(petToSend);
     $.ajax({
         type: 'POST',
@@ -90,7 +89,16 @@ function getPets() {
 }
 
 function appendTable(petsAndOwners) {
-
+    for (var i = 0; i < petsAndOwners.length; i++) {
+        var petData = petsAndOwners[i];
+        console.log('pet data', petData);
+        var $tr = $('<tr></tr>');
+        $tr.append('<td>' + petData.first + ' ' + petData.last + '</td>');
+        $tr.append('<td>' + petData.name + '</td>');
+        $tr.append('<td>' + petData.breed + '</td>');
+        $tr.append('<td>' + petData.color + '</td>');
+        $('#petData').append($tr);
+    }
 
 
 }
