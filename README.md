@@ -1,11 +1,19 @@
 # pet_hotel
 Your team has started a new business in Uptown for dog-enthusiasts that also need to vacation without their beloved pets
 
-### application functionality
+## application functionality
+
 -check in their pet
 -check out their pet
 -update their pet's info
 -remove their pet
+
+Technologies
+------------
+- JQuery
+- Node
+- Express
+- SQL
 
 ## Table Creation
 ```
@@ -32,6 +40,7 @@ CREATE TABLE visits (
 
 ```
 ## Test Data
+
 ```
 INSERT INTO "owners" ("first", "last")
 VALUES ('David', 'Beaudway'), ('Emi','Chen'), ('Elvis', 'Hang'), ('Emma', 'Stout');
@@ -41,3 +50,4 @@ VALUES ('Lucy', 'Terrier', 'Black and White', '1'), ('Shadow','Cat', 'Black', '2
 
 INSERT INTO "visits" ("checkin", "pet_id") VALUES ('10/25/2017', '3');
 ```
+
