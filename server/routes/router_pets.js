@@ -13,6 +13,4 @@ var config = {
 var poolModule = require('../modules/pool.js');
 var pool = poolModule;
 
-// var pool = new pg.Pool(config);
-
 module.exports = router;
