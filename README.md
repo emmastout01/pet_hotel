@@ -1,4 +1,11 @@
 # pet_hotel
+Your team has started a new business in Uptown for dog-enthusiasts that also need to vacation without their beloved pets
+
+### application functionality
+-check in their pet
+-check out their pet
+-update their pet's info
+-remove their pet
 
 ## Table Creation
 ```

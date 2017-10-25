@@ -36,7 +36,6 @@ router.post('/', function (req, res) {
 router.put('/:id', function (req, res) {
   var id = req.params.id;
   var visitUpdate = req.body;
-  console.log(id);
   pool.connect(function (errorConnecting, db, done) {
     if (errorConnecting) {
       console.log('Error connecting', errorConnecting);
@@ -50,6 +49,27 @@ router.put('/:id', function (req, res) {
           res.sendStatus(500);
         } else {
           res.sendStatus(201);
+        }
+      });
+    }
+  });//end pool
+});//end put route
+
+//get rout to get pet name check in and check out & visit.id
+router.get('/', function (req, res) {
+  pool.connect(function (errorConnecting, db, done) {
+    if (errorConnecting) {
+      console.log('Error connecting', errorConnecting);
+      res.send(500);
+    } else {
+      var queryText = 'SELECT "visits"."id", pet"."name", "visits"."checkin", "visits"."checkout" FROM "visits" JOIN "pets" ON "pets"."id" = "visits"."pet_id";';
+      db.query(queryText, function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log(errorMakingQuery);
+          res.sendStatus(500);
+        } else {
+          res.send(result.rows);
         }
       });
     }
