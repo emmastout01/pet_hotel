@@ -62,7 +62,7 @@ router.get('/', function (req, res) {
       console.log('Error connecting', errorConnecting);
       res.send(500);
     } else {
-      var queryText = 'SELECT "visits"."id", pet"."name", "visits"."checkin", "visits"."checkout" FROM "visits" JOIN "pets" ON "pets"."id" = "visits"."pet_id";';
+      var queryText = 'SELECT "visits"."id", "pet"."name", "visits"."checkin", "visits"."checkout" FROM "visits" JOIN "pets" ON "pets"."id" = "visits"."pet_id";';
       db.query(queryText, function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
