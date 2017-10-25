@@ -21,20 +21,20 @@
         <h1>Pet Hotel!</h1>
         <h2>Owner Registration</h2>
         <div>
-            First Name: <input type="text">
-            Last Name: <input type="text">
-            <button id="ownerRegisterButton">Register</button>
+            First Name: <input id='ownerFirst' type="text">
+            Last Name: <input id='ownerLast' type="text">
+            <button id="ownerRegisterButton" class="btn btn-info">Register</button>
         </div>
         <h2>Pets</h2>
         <div>
-            Owner Name: <select name="" id=""></select>
+            Owner Name: <select name="Username" id="usernameHere"></select>
             Pet Name: <input type="text">
             Color: <input type="text">
             Breed: <input type="text">
-            <button id="petRegisterButton">Add Pet</button>
+            <button id="petRegisterButton" class="btn btn-info">Add Pet</button>
         </div>
         <div>
-            <table>
+            <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th>Owner</th>
@@ -45,8 +45,10 @@
                         <th>Delete</th>
                         <th>Check In/Out</th>
                     </tr>
-                   
                 </thead>
+                <tbody id="petData">
+
+                </tbody>
             </table>
         </div>
 
