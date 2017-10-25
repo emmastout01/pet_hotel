@@ -12,7 +12,7 @@ function readyNow(){
     $('#petData').on('click', '#checkInBtn', checkInClick)
     $('#petData').on('click', '#checkOutBtn', checkOutClick)
     getOwners();
-    getPets();
+    getPets1();
 }
 
 function checkInClick(){
@@ -82,21 +82,54 @@ function petRegClick() {
         data: petToSend
     }).done(function(response){
         console.log('added', response);
-        getPets();
+        getPets1();
     }).fail(function(error){
         console.log('Failed: ', error);
     })
 }
 
-function getPets() {
+function getPets1() {
     $.ajax({
         type: 'GET',
         url: '/pets',
     }).done(function(response){
         console.log('added', response);
-        appendTable(response);
+        var pet_id;
+        for (var i = 0; i < response.length; i++) {
+            pet_id = response[i].pet_id;
+            console.log(pet_id);
+        }
+        var petIDToSend = {
+            pet_id: pet_id
+        }
+        postPetID(petIDToSend);
     }).fail(function(error){
         console.log('Failed: ', error);
+    })
+}
+
+function postPetID(petIDToSend) {
+    $.ajax({
+        type: 'POST',
+        url: '/pets',
+        data: petIDToSend
+    }).done(function(response){
+        console.log('added', response);
+        console.log('pet id sent:', petIDToSend);
+        getPets2();
+    }).fail(function(error){
+        console.log('Failed: ', error);
+    })
+}
+
+function getPets2(){
+    $.ajax({
+        type: 'GET',
+        url: '/pets'
+    }).done(function(response){
+        appendTable(response)
+    }).fail(function(error){
+        console.log('Failed:', error)
     })
 }
 
