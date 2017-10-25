@@ -66,14 +66,14 @@ router.post('/', function (req, res) {
       console.log('Error connecting ', errorConnecting);
       res.sendStatus(500);
     } else {
-      var queryText = 'INSERT INTO "pets" ("name", "breed", "color", "owner_id") VALUES($1, $2, $3, $4);';
+      var queryText = 'INSERT INTO "pets" ("name", "breed", "color", "owner_id") VALUES($1, $2, $3, $4) RETURNING "id";';
       db.query(queryText, [newPet.name, newPet.breed, newPet.color, newPet.owner_id], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
           console.log('errorMakingQuery', errorMakingQuery);
           res.sendStatus(500);
         } else {
-          res.sendStatus(201);
+          res.send(result.rows);
         }
       });
     }

@@ -16,7 +16,7 @@ function readyNow(){
     $('#petData').on('click', '#deleteBtn', confirmDelete);
     $('#delete-modal').on('click', '.delete', deleteTablerow);
     getOwners();
-    getPets1();
+    getPets();
 }
 
 function confirmDelete(){
@@ -90,6 +90,7 @@ function appendOwners(usernameIn){
 
 function petRegClick() {
     console.log('pet button clicked');
+    var petId;
     var petToSend = {
         owner_id: $userID,
         name: $('#petName').val(),
@@ -103,48 +104,33 @@ function petRegClick() {
         url: '/pets',
         data: petToSend
     }).done(function(response){
-        console.log('added', response);
-        getPets1();
+        console.log('added', response[0].id);
+        petId = (response[0].id)
+        console.log(typeof(petId));
+        postPetID(petId);
     }).fail(function(error){
         console.log('Failed: ', error);
     })
 }
 
-function getPets1() {
-    $.ajax({
-        type: 'GET',
-        url: '/pets',
-    }).done(function(response){
-        console.log('added', response);
-        var pet_id;
-        for (var i = 0; i < response.length; i++) {
-            pet_id = response[i].pet_id;
-            console.log(pet_id);
-        }
-        var petIDToSend = {
-            pet_id: pet_id
-        }
-        postPetID(petIDToSend);
-    }).fail(function(error){
-        console.log('Failed: ', error);
-    })
-}
-
-function postPetID(petIDToSend) {
+function postPetID(value) {
+    var petIDToSend = {
+        id: value
+    }
     $.ajax({
         type: 'POST',
-        url: '/pets',
+        url: '/visits',
         data: petIDToSend
     }).done(function(response){
         console.log('added', response);
         console.log('pet id sent:', petIDToSend);
-        getPets2();
+        getPets();
     }).fail(function(error){
         console.log('Failed: ', error);
     })
 }
 
-function getPets2(){
+function getPets(){
     $.ajax({
         type: 'GET',
         url: '/pets'
@@ -156,6 +142,7 @@ function getPets2(){
 }
 
 function appendTable(petsAndOwners) {
+    $('#petData').empty();
     for (var i = 0; i < petsAndOwners.length; i++) {
         var petData = petsAndOwners[i];
         console.log('pet data', petData);
