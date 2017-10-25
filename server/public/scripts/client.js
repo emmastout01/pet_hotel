@@ -9,9 +9,21 @@ function readyNow(){
     $('#ownerRegisterButton').on('click', ownerRegClick );
     $('#petRegisterButton').on('click', petRegClick );
     $('#usernameHere').on('change', onOwnerChange);
+    $('#petData').on('click', '#checkInBtn', checkInClick)
+    $('#petData').on('click', '#checkOutBtn', checkOutClick)
     getOwners();
+    getPets();
 }
 
+function checkInClick(){
+    $('#checkOutBtn').removeClass('hidden');
+    $('#checkInBtn').addClass('hidden');
+}
+
+function checkOutClick(){
+    $('#checkInBtn').removeClass('hidden');
+    $('#checkOutBtn').addClass('hidden');
+}
 
 function ownerRegClick(){
     console.log('in saveOwner' );
@@ -93,10 +105,17 @@ function appendTable(petsAndOwners) {
         var petData = petsAndOwners[i];
         console.log('pet data', petData);
         var $tr = $('<tr></tr>');
+        var updateBtn = `<button id="updateBtn" class="btn btn-info">Update</button>`;
+        var deleteBtn = `<button id="deleteBtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash"</span></button>`;
+        var checkInBtn = `<button id="checkInBtn" class="btn btn-success">In</button>`;
+        var checkOutBtn = `<button id="checkOutBtn" class="btn btn-success hidden">Out</button>`;
         $tr.append('<td>' + petData.first + ' ' + petData.last + '</td>');
         $tr.append('<td>' + petData.name + '</td>');
         $tr.append('<td>' + petData.breed + '</td>');
         $tr.append('<td>' + petData.color + '</td>');
+        $tr.append('<td>' + updateBtn + '</td>');
+        $tr.append('<td>' + deleteBtn + '</td>');
+        $tr.append('<td>' + checkInBtn + checkOutBtn +'</td>');
         $('#petData').append($tr);
     }
 
