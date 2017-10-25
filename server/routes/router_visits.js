@@ -19,7 +19,7 @@ router.post('/', function (req, res) {
       res.send(500);
     } else {
       var queryText = 'INSERT INTO "visits" ("pet_id") VALUES ($1);';
-      db.query(queryText, [petId], function (errorMakingQuery, result) {
+      db.query(queryText, [petId.id], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
           console.log(errorMakingQuery);
