@@ -11,8 +11,8 @@ var config = {
 };
 
 //post
-router.post('/:id', function (req, res) {
-  var petId = req.params.id;
+router.post('/', function (req, res) {
+  var petId = req.body;
   pool.connect(function (errorConnecting, db, done) {
     if (errorConnecting) {
       console.log('Error connecting', errorConnecting);
