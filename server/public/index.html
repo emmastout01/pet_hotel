@@ -21,16 +21,21 @@
         <h1>Pet Hotel!</h1>
         <h2>Owner Registration</h2>
         <div>
-            First Name: <input id='ownerFirst' type="text">
-            Last Name: <input id='ownerLast' type="text">
+            First Name:
+            <input id='ownerFirst' type="text"> Last Name:
+            <input id='ownerLast' type="text">
             <button id="ownerRegisterButton" class="btn btn-info">Register</button>
         </div>
         <h2>Pets</h2>
         <div>
-            Owner Name: <select name="Username" id="usernameHere"><option>Select Owner Name</option></select>
-            Pet Name: <input type="text" id="petName" >
-            Color: <input type="text" id="petColor">
-            Breed: <input type="text" id="petBreed">
+            Owner Name:
+            <select name="Username" id="usernameHere">
+                <option>Select Owner Name</option>
+            </select>
+            Pet Name:
+            <input type="text" id="petName"> Color:
+            <input type="text" id="petColor"> Breed:
+            <input type="text" id="petBreed">
             <button id="petRegisterButton" class="btn btn-info">Add Pet</button>
         </div>
         <div>
@@ -51,7 +56,19 @@
                 </tbody>
             </table>
         </div>
-
+        <div id="delete-modal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    Are you sure?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                        <button type="button" class="btn btn-success delete">Yes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

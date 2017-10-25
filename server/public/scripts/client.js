@@ -2,6 +2,7 @@ console.log('js');
 $(document).ready(readyNow);
 
 var $userID;
+var toDeleteId;
 
 function readyNow(){
     console.log('jq');
@@ -9,10 +10,31 @@ function readyNow(){
     $('#ownerRegisterButton').on('click', ownerRegClick );
     $('#petRegisterButton').on('click', petRegClick );
     $('#usernameHere').on('change', onOwnerChange);
-    $('#petData').on('click', '#checkInBtn', checkInClick)
-    $('#petData').on('click', '#checkOutBtn', checkOutClick)
+    $('#petData').on('click', '#updateBtn', updatePets);
+    $('#petData').on('click', '#checkInBtn', checkInClick);
+    $('#petData').on('click', '#checkOutBtn', checkOutClick);
+    $('#petData').on('click', '#deleteBtn', confirmDelete);
+    $('#delete-modal').on('click', '.delete', deleteTablerow);
     getOwners();
     getPets1();
+}
+
+function confirmDelete(){
+    $('#delete-modal').modal();
+    toDeleteId = $(this).closest('tr').data('id');
+    console.log('id to delete', toDeleteId)
+}
+
+function deleteTablerow(){
+    $('#delete-modal').modal('hide');
+    $.ajax({
+        type: 'DELETE',
+        url: '/pets/' + toDeleteId
+    }).done(function(response){
+        $('tr[data-id=' + toDeleteId + ']').fadeOut(400, function(){
+            $(this).remove();
+        })
+    })
 }
 
 function checkInClick(){
@@ -137,7 +159,7 @@ function appendTable(petsAndOwners) {
     for (var i = 0; i < petsAndOwners.length; i++) {
         var petData = petsAndOwners[i];
         console.log('pet data', petData);
-        var $tr = $('<tr></tr>');
+        var $tr = $('<tr data-id="'+ i + '"></tr>');
         var updateBtn = `<button id="updateBtn" class="btn btn-info">Update</button>`;
         var deleteBtn = `<button id="deleteBtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash"</span></button>`;
         var checkInBtn = `<button id="checkInBtn" class="btn btn-success">In</button>`;
@@ -153,6 +175,10 @@ function appendTable(petsAndOwners) {
     }
 
 
+}
+
+function updatePets() {
+    console.log('in updatePets');
 }
 
 function onOwnerChange(event){
