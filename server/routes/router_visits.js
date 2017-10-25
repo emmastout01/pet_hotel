@@ -98,6 +98,28 @@ router.get('/', function (req, res) {
   });//end pool
 });//end put route
 
+//delete a pet visit
+router.delete('/:id', function (req, res) {
+  var petId = req.params.id;
+  pool.connect(function (errorConnecting, db, done) {
+    if (errorConnecting) {
+      console.log('Error connecting ', errorConnecting);
+      res.sendStatus(500);
+    } else {
+      var queryText = 'DELETE FROM "visits" WHERE  "pet_id" = $1;';
+      db.query(queryText,[petId], function (errorMakingQuery, result) {
+        done();
+        if (errorMakingQuery) {
+          console.log('errorMakingQuery', errorMakingQuery);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(201);
+        }
+      });
+    }
+  });//end of pool
+});//end of delete
+
 var poolModule = require('../modules/pool.js');
 var pool = poolModule;
 

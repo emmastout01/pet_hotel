@@ -44,7 +44,7 @@ router.delete('/:id', function (req, res) {
       console.log('Error connecting ', errorConnecting);
       res.sendStatus(500);
     } else {
-      var queryText = 'DELETE FROM "visits" WHERE  "pet_id" = $1; DELETE FROM "pets" WHERE "id" = $1;';
+      var queryText = 'DELETE FROM "pets" WHERE "id" = $1;';
       db.query(queryText,[petId], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
