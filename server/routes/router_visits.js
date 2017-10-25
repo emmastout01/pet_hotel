@@ -10,15 +10,15 @@ var config = {
   idleTimeoutMillis: 30000
 };
 
-//put
-router.put('/', function (req, res) {
+//post route
+router.post('/', function (req, res) {
   var newVisit = req.body;
   pool.connect(function (errorConnecting, db, done) {
     if (errorConnecting) {
       console.log('Error connecting', errorConnecting);
       res.send(500);
     } else {
-      var queryText = 'UPDATE "visits" SET "checkin" = $1 WHERE "id" = $2;';
+      var queryText = 'INSERT INTO "visits" ("checkin", "pet_id") VALUES ($1, $2);';
       db.query(queryText, [newVisit.checkin, newVisit.pet_id], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
