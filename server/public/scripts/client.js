@@ -2,7 +2,8 @@ console.log('js');
 $(document).ready(readyNow);
 
 var $userID;
-var toDeleteId;
+var toDeleteVisitId;
+var toDeletePetId;
 
 function readyNow() {
     console.log('jq');
@@ -22,15 +23,17 @@ function readyNow() {
 
 function confirmDelete() {
     $('#delete-modal').modal();
-    toDeleteId = $(this).closest('tr').data('id');
-    console.log('id to delete', toDeleteId);
+    toDeleteVisitId = $(this).closest('tr').data().pet.visit_id;
+    toDeletePetId = $(this).closest('tr').data().pet.pet_id;
+    console.log('id to delete', toDeleteVisitId);
+    console.log('pet id to delete', toDeletePetId);
 }
 
 function deleteTablerow(){
     $('#delete-modal').modal('hide');
     $.ajax({
         type: 'DELETE',
-        url: '/visits/' + toDeleteId
+        url: '/visits/' + toDeleteVisitId
     }).done(function(response){
         reallyDeleteItThisTime();
         })
@@ -39,11 +42,12 @@ function deleteTablerow(){
 function reallyDeleteItThisTime() {
     $.ajax({
         type: 'DELETE',
-        url: '/pets/' + toDeleteId
+        url: '/pets/' + toDeletePetId
     }).done(function(response){
-        $('tr[data-id=' + toDeleteId + ']').fadeOut(400, function(){
+        $('tr[data-id=' + toDeletePetId + ']').fadeOut(400, function(){
             $(this).remove();
         })
+        getPets();
     })
 }
 
@@ -180,7 +184,8 @@ function appendTable(petsAndOwners) {
     for (var i = 0; i < petsAndOwners.length; i++) {
         var petData = petsAndOwners[i];
         console.log('pet data', petData);
-        var $tr = $('<tr data-id="' + petData.id + '"></tr>');
+        var $tr = $('<tr></tr>');
+        //$('<tr data-id="' + petData.id + '"></tr>');
         console.log('pet id', petData)
         var updateBtn = `<button id="updateBtn" class="btn btn-info">Update</button>`;
         var deleteBtn = `<button id="deleteBtn" class="btn btn-danger"><span class="glyphicon glyphicon-trash"</span></button>`;
