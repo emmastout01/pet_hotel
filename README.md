@@ -3,10 +3,10 @@ Your team has started a new business in Uptown for dog-enthusiasts that also nee
 
 ## application functionality
 
--check in their pet
--check out their pet
--update their pet's info
--remove their pet
+- check in their pet
+- check out their pet
+- update their pet's info
+- remove their pet
 
 Technologies
 ------------
@@ -48,6 +48,6 @@ VALUES ('David', 'Beaudway'), ('Emi','Chen'), ('Elvis', 'Hang'), ('Emma', 'Stout
 INSERT INTO "pets" ("name", "breed", "color", "owner_id")
 VALUES ('Lucy', 'Terrier', 'Black and White', '1'), ('Shadow','Cat', 'Black', '2'), ('Bird', 'Bird', 'Green', '3'), ('Ikey', 'Cat', 'Black', '3');
 
-INSERT INTO "visits" ("checkin", "pet_id") VALUES ('10/25/2017', '3');
+INSERT INTO "visits" ("pet_id") VALUES (2), (1);
 ```
 
