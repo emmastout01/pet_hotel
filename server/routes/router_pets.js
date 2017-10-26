@@ -21,7 +21,10 @@ router.get('/', function (req, res) {
       res.sendStatus(500);
     } else {
       //select owner, pet, breed, color, checkin, and checkout
-      var queryText = 'SELECT "owners"."first", "owners"."last", "pets"."name", "pets"."breed", "pets"."color", "visits"."checkin", "visits"."checkout", "pets"."owner_id", "visits"."pet_id", "visits"."id" FROM "owners" JOIN "pets" ON "owners"."id" = "pets"."owner_id" JOIN "visits" ON "pets"."id" = "visits"."pet_id";';
+      var queryText = `
+        SELECT "owners"."first", "owners"."last", "pets"."name", "pets"."breed", "pets"."color", "visits"."checkin", "visits"."checkout", "pets"."owner_id", "pets"."id" AS pet_id, "visits"."pet_id", "visits"."id" AS visit_id FROM "owners"
+        JOIN "pets" ON "owners"."id" = "pets"."owner_id" JOIN "visits" ON "pets"."id" = "visits"."pet_id";
+      `
       db.query(queryText, function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
@@ -39,13 +42,16 @@ router.get('/', function (req, res) {
 //delete a pet history and pet
 router.delete('/:id', function (req, res) {
   var petId = req.params.id;
+  console.log('pet id');
+  console.log(typeof petId);
+
   pool.connect(function (errorConnecting, db, done) {
     if (errorConnecting) {
       console.log('Error connecting ', errorConnecting);
       res.sendStatus(500);
     } else {
       var queryText = 'DELETE FROM "pets" WHERE "id" = $1;';
-      db.query(queryText,[petId], function (errorMakingQuery, result) {
+      db.query(queryText,[parseInt(petId, 10)], function (errorMakingQuery, result) {
         done();
         if (errorMakingQuery) {
           console.log('errorMakingQuery', errorMakingQuery);
